@@ -84,7 +84,7 @@ $result_products = $conn->query($sql_products);
 </head>
 <body>
 
-    <h1>Listado de Productos con Listas de Precios</h1>
+    <h1>Lista de Productos</h1>
     <a href="index.php">Atras</a>
 
     <table>
