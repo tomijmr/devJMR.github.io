@@ -1,7 +1,7 @@
 <?php
 // Conexión a la base de datos
 $servername = "localhost";
-$username = "root";  // Cambia por tu usuario de la base de datos
+$username = "c2611613";  // Cambia por tu usuario de la base de datos
 $password = "SI42dakize";  // Cambia por tu contraseña
 $dbname = "c2611613_devjmr";
 
