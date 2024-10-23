@@ -1,21 +1,12 @@
 <?php
-# Conexión a la base de datos
-$servername = "localhost";
-$username = "c2611613";  // Cambia por tu usuario de la base de datos
-$password = "SI42dakize";  // Cambia por tu contraseña
-$dbname = "c2611613_devjmr";
+include("dbconnect.php");
 
-// $servername = "localhost";
-// $username = "root";  // Cambia por tu usuario de la base de datos
-// $password = "";  // Cambia por tu contraseña
-// $dbname = "sams-cotizador";
+// Variable para almacenar el valor de búsqueda
+$search = '';
 
-// Crear la conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+// Si se ha enviado una búsqueda, modificar la consulta
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
 }
 
 // Obtener las listas de precios
@@ -30,8 +21,12 @@ if ($result_lists->num_rows > 0) {
     }
 }
 
-// Consulta para obtener los productos
+// Consulta para obtener los productos con filtro de búsqueda
 $sql_products = "SELECT id_product, desc_product, cost_product FROM product";
+if (!empty($search)) {
+    $sql_products .= " WHERE id_product LIKE '%$search%' OR desc_product LIKE '%$search%'";
+}
+
 $result_products = $conn->query($sql_products);
 ?>
 
@@ -80,17 +75,46 @@ $result_products = $conn->query($sql_products);
             transition: background-color 0.3s ease, color 0.3s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         a:hover {
             background-color: #ffff11; /* Cambia el color de fondo al pasar el cursor */
             color: #ffd700; /* Cambia el texto a dorado */
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn-search {
+            padding: 10px 20px;
+            background-color: #800000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .btn-search:hover {
+            background-color: #a00000;
         }
     </style>
 </head>
 <body>
 
     <h1>Lista de Productos</h1>
-    <a href="index.php">Atras</a>
+    <a href="index.php">Atrás</a>
+
+    <!-- Formulario de búsqueda -->
+    <div class="search-bar">
+        <form action="cotizador.php" method="GET">
+            <input type="text" name="search" placeholder="Buscar por código o descripción..." value="<?php echo $search; ?>">
+            <button type="submit" class="btn-search">Buscar</button>
+        </form>
+    </div>
 
     <table>
         <tr>

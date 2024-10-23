@@ -1,23 +1,5 @@
 <?php
-// Conexión a la base de datos
-// $servername = "localhost";
-// $username = "root";  // Cambia por tu usuario de la base de datos
-// $password = "";  // Cambia por tu contraseña
-// $dbname = "sams-cotizador";
-
-$servername = "localhost";
-$username = "c2611613";  // Cambia por tu usuario de la base de datos
-$password = "SI42dakize";  // Cambia por tu contraseña
-$dbname = "c2611613_devjmr";
-
-// Crear la conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
+include("dbconnect.php");
 // Si se ha enviado el formulario, insertar los datos en la base de datos
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $desc_product = $_POST["desc_product"];
@@ -28,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO product (desc_product, cost_product) VALUES ('$desc_product', '$cost_product')";
         if ($conn->query($sql) === TRUE) {
             echo "<p>Producto agregado exitosamente.</p>";
+            header("Location:cotizador.php");
+            die();
         } else {
             echo "<p>Error al agregar el producto: " . $conn->error . "</p>";
         }

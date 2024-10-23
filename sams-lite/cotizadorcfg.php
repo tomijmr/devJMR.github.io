@@ -71,6 +71,7 @@
     <h1>Configuración</h1>  
         <a href='alta_producto.php'>Alta de producto</a>
         <a href='alta_lista.php'>Alta de Lista</a>
+        <a href='alta_masiva.php'>Alta Masiva</a>
         <a href='index.php'>Atrás</a>
     </div>
 
