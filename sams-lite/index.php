@@ -53,6 +53,7 @@
         <h1>SaMS - Modulo Cotizador</h1>
         <a href="cotizador.php">Cotizador</a>
         <a href="cotizadorcfg.php">Configurar Cotizador</a>
+        <p>Solicita tu cuenta demo haciendo click </p> <a href="https://www.wa.link/1imasu">aqui</a>
     </div>
 </body>
 </html>
