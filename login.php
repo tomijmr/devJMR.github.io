@@ -31,7 +31,7 @@ try {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $username;
                 // Redirigir a cotizador.php
-                header("Location: sams-lite/cotizador.php");
+                header("Location: sams-lite/index.php");
                 exit;
             } else {
                 echo "Usuario o contraseña incorrectos.";
