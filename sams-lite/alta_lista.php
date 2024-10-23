@@ -1,10 +1,5 @@
 <?php
 // Conexión a la base de datos
-// $servername = "localhost";
-// $username = "root";  // Cambia por tu usuario de la base de datos
-// $password = "";  // Cambia por tu contraseña
-// $dbname = "sams-cotizador";
-
 $servername = "c2611613";
 $username = "c2611613";  // Cambia por tu usuario de la base de datos
 $password = "SI42dakize";  // Cambia por tu contraseña
@@ -20,16 +15,16 @@ if ($conn->connect_error) {
 
 // Si se ha enviado el formulario, insertar los datos en la base de datos
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $desc_product = $_POST["desc_product"];
-    $cost_product = $_POST["cost_product"];
+    $name_list = $_POST["name_list"];
+    $coef_list = $_POST["coef_list"];
     
     // Validar que los campos no estén vacíos
-    if (!empty($desc_product) && !empty($cost_product)) {
-        $sql = "INSERT INTO product (desc_product, cost_product) VALUES ('$desc_product', '$cost_product')";
+    if (!empty($name_list) && !empty($coef_list)) {
+        $sql = "INSERT INTO lists (name_list, coef_list) VALUES ('$name_list', '$coef_list')";
         if ($conn->query($sql) === TRUE) {
-            echo "<p>Producto agregado exitosamente.</p>";
+            echo "<p>Lista agregada exitosamente.</p>";
         } else {
-            echo "<p>Error al agregar el producto: " . $conn->error . "</p>";
+            echo "<p>Error al agregar la lista: " . $conn->error . "</p>";
         }
     } else {
         echo "<p>Por favor, complete todos los campos.</p>";
@@ -45,7 +40,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta de Productos</title>
+    <title>Alta de Lista</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -113,17 +108,17 @@ $conn->close();
 </head>
 <body>
 
-    <h1>Alta de Productos</h1>
+    <h1>Alta de Lista</h1>
 
     <div class="form-container">
-        <form action="alta_producto.php" method="POST">
-            <label for="desc_product">Descripción del Producto:</label>
-            <input type="text" id="desc_product" name="desc_product" placeholder="Ej: Televisor 42 pulgadas" required>
+        <form action="alta_lista.php" method="POST">
+            <label for="name_list">Nombre de la Lista:</label>
+            <input type="text" id="name_list" name="name_list" placeholder="Ej: Lista Mayorista" required>
 
-            <label for="cost_product">Costo del Producto:</label>
-            <input type="number" id="cost_product" name="cost_product" placeholder="Ej: 25000" step="0.01" required>
+            <label for="coef_list">Coeficiente de la Lista:</label>
+            <input type="number" id="coef_list" name="coef_list" placeholder="Ej: 1.30" step="0.01" required>
 
-            <button type="submit" class="btn">Cargar Producto</button>
+            <button type="submit" class="btn">Cargar Lista</button>
             <a href="cotizador.php">Menú Principal</a>
         </form>
     </div>
