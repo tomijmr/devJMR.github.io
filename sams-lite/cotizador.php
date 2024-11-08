@@ -21,8 +21,8 @@ if ($result_lists->num_rows > 0) {
     }
 }
 
-// Consulta para obtener los productos con filtro de búsqueda
-$sql_products = "SELECT id_product, desc_product, cost_product FROM product";
+// Consulta para obtener los productos con filtro de búsqueda y stock
+$sql_products = "SELECT id_product, desc_product, cost_product, stock_prod FROM product";
 if (!empty($search)) {
     $sql_products .= " WHERE id_product LIKE '%$search%' OR desc_product LIKE '%$search%'";
 }
@@ -37,7 +37,7 @@ $result_products = $conn->query($sql_products);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cotizador - SaMS Lite</title>
     <style>
-        body {
+  body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             margin: 0;
@@ -121,6 +121,7 @@ $result_products = $conn->query($sql_products);
             <th>Cod.</th>
             <th>Nombre</th>
             <th>Costo</th>
+            <th>Stock</th>
             <?php
             // Agregar los nombres de las listas como encabezados
             foreach ($lists as $list) {
@@ -136,6 +137,7 @@ $result_products = $conn->query($sql_products);
                 echo "<td>" . $product["id_product"] . "</td>";
                 echo "<td>" . $product["desc_product"] . "</td>";
                 echo "<td>$" . number_format($product["cost_product"], 2) . "</td>";
+                echo "<td>" . $product["stock_prod"] . "</td>";
 
                 // Para cada producto, multiplicar por el coeficiente de cada lista
                 foreach ($lists as $list) {
@@ -145,7 +147,7 @@ $result_products = $conn->query($sql_products);
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='" . (3 + count($lists)) . "'>No hay productos disponibles</td></tr>";
+            echo "<tr><td colspan='" . (4 + count($lists)) . "'>No hay productos disponibles</td></tr>";
         }
         ?>
     </table>

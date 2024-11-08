@@ -50,9 +50,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>SaMS - Modulo Cotizador</h1>
+        <h1>Sales Managment System</h1>
+        <a href="ventas.php">Ventas</a>
         <a href="cotizador.php">Cotizador</a>
         <a href="cotizadorcfg.php">Configurar Cotizador</a>
+        <a href="clientes.php">Clientes</a>
     </div>
 </body>
 </html>
