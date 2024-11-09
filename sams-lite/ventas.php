@@ -1,33 +1,18 @@
 <?php
 include("dbconnect.php");
 
-// Variable para almacenar el valor de búsqueda
-$search = '';
+// Obtener los clientes
+$sql_clients = "SELECT id, name_razon_social FROM clients";
+$result_clients = $conn->query($sql_clients);
 
-// Si se ha enviado una búsqueda, modificar la consulta
-if (isset($_GET['search'])) {
-    $search = $_GET['search'];
-}
+// Obtener los productos
+$sql_products = "SELECT id_product, desc_product, cost_product, stock_prod FROM product";
+$result_products = $conn->query($sql_products);
 
 // Obtener las listas de precios
 $sql_lists = "SELECT id_list, name_list, coef_list FROM lists";
 $result_lists = $conn->query($sql_lists);
 
-// Crear un array para almacenar las listas
-$lists = [];
-if ($result_lists->num_rows > 0) {
-    while ($row = $result_lists->fetch_assoc()) {
-        $lists[] = $row;
-    }
-}
-
-// Consulta para obtener los productos con filtro de búsqueda y stock
-$sql_products = "SELECT id_product, desc_product, cost_product, stock_prod FROM product";
-if (!empty($search)) {
-    $sql_products .= " WHERE id_product LIKE '%$search%' OR desc_product LIKE '%$search%'";
-}
-
-$result_products = $conn->query($sql_products);
 ?>
 
 <!DOCTYPE html>
@@ -136,9 +121,10 @@ $result_products = $conn->query($sql_products);
 </head>
 <body>
 
-<h1>Facturador POS</h1>
-
 <form action="guardar_venta.php" method="POST">
+<center>
+<h1>Facturador POS</h1>
+</center>
     <!-- Selección del Cliente -->
     <label for="client">Cliente:</label>
     <select name="client_id" id="client" required>
@@ -146,7 +132,7 @@ $result_products = $conn->query($sql_products);
         <?php
         if ($result_clients->num_rows > 0) {
             while ($client = $result_clients->fetch_assoc()) {
-                echo "<option value='" . $client['id_client'] . "'>" . $client['name_client'] . "</option>";
+                echo "<option value='" . $client['id'] . "'>" . $client['name_razon_social'] . "</option>";
             }
         }
         ?>
