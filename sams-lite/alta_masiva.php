@@ -105,11 +105,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input[type="submit"]:hover {
             background-color: #a52a2a; /* Tono más oscuro de bordó */
         }
+        a{
+            background-color: #800000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 
     <h1>Alta Masiva de Productos</h1>
+    <a href="index.php">Atras</a>
     <form action="alta_masiva.php" method="POST" enctype="multipart/form-data">
         <label for="file">Selecciona el archivo de Excel (.xls):</label>
         <input type="file" name="file" id="file" accept=".xls, .xlsx" required>

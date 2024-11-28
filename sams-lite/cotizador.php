@@ -35,191 +35,127 @@ $result_products = $conn->query($sql_products);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facturador POS - SaMS Lite</title>
+    <title>Cotizador - SaMS Lite</title>
     <style>
-        body {
+  body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #f5f5f5;
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 600px;
+        table {
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-
-        label {
-            display: block;
-            color: #555;
-            font-weight: bold;
+        table, th, td {
+            border: 1px solid #800000; /* Bordó estilo poncho salteño */
+        }
+        th, td {
+            padding: 12px;
             text-align: left;
-            width: 100%;
-            margin-bottom: 5px;
         }
-
-        select, input[type="number"], input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        button {
+        th {
             background-color: #800000;
             color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
         }
-
-        button:hover {
-            background-color: #660000;
+        td {
+            background-color: #ffd700; /* Color dorado */
         }
-
-        .product-row {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            gap: 10px;
-        }
-
-        #products {
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        #add-product-btn {
-            background-color: #800000;
-            padding: 8px 12px;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        #add-product-btn:hover {
-            background-color: #660000;
-        }
-
-        .section-title {
+        a {
+            display: inline-block;
+            background-color: #ffffff; /* Dorado claro */
+            color: #800000; /* Bordó para el texto */
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
             font-size: 18px;
-            color: #333;
-            margin-bottom: 10px;
-            width: 100%;
-            text-align: left;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        a:hover {
+            background-color: #ffff11; /* Cambia el color de fondo al pasar el cursor */
+            color: #ffd700; /* Cambia el texto a dorado */
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn-search {
+            padding: 10px 20px;
+            background-color: #800000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .btn-search:hover {
+            background-color: #a00000;
         }
     </style>
 </head>
 <body>
 
-<h1>Facturador POS</h1>
+    <h1>Lista de Productos</h1>
+    <a href="index.php">Atrás</a>
 
-<form action="guardar_venta.php" method="POST">
-    <!-- Selección del Cliente -->
-    <label for="client">Cliente:</label>
-    <select name="client_id" id="client" required>
-        <option value="">Seleccione un cliente</option>
-        <?php
-        if ($result_clients->num_rows > 0) {
-            while ($client = $result_clients->fetch_assoc()) {
-                echo "<option value='" . $client['id_client'] . "'>" . $client['name_client'] . "</option>";
-            }
-        }
-        ?>
-    </select>
-
-    <!-- Selección de Producto y Cantidad -->
-    <div class="section-title">Productos</div>
-    <div id="products">
-        <div class="product-row">
-            <label>Producto:</label>
-            <select name="product_id[]" required>
-                <option value="">Seleccione un producto</option>
-                <?php
-                if ($result_products->num_rows > 0) {
-                    while ($product = $result_products->fetch_assoc()) {
-                        echo "<option value='" . $product['id_product'] . "' data-cost='" . $product['cost_product'] . "'>" . $product['desc_product'] . " - $" . $product['cost_product'] . "</option>";
-                    }
-                }
-                ?>
-            </select>
-            <label>Cantidad:</label>
-            <input type="number" name="quantity[]" min="1" required>
-        </div>
+    <!-- Formulario de búsqueda -->
+    <div class="search-bar">
+        <form action="cotizador.php" method="GET">
+            <input type="text" name="search" placeholder="Buscar por código o descripción..." value="<?php echo $search; ?>">
+            <button type="submit" class="btn-search">Buscar</button>
+        </form>
     </div>
-    <button type="button" id="add-product-btn" onclick="addProductRow()">Agregar otro producto</button>
 
-    <!-- Selección de Lista de Precios -->
-    <div class="section-title">Financiación</div>
-    <label for="price_list">Lista de Precios:</label>
-    <select name="list_id" id="price_list" required>
-        <option value="">Seleccione una lista</option>
-        <?php
-        if ($result_lists->num_rows > 0) {
-            while ($list = $result_lists->fetch_assoc()) {
-                echo "<option value='" . $list['id_list'] . "' data-coef='" . $list['coef_list'] . "'>" . $list['name_list'] . "</option>";
+    <table>
+        <tr>
+            <th>Cod.</th>
+            <th>Nombre</th>
+            <th>Base Revendedor</th>
+            <th>Stock</th>
+            <?php
+            // Agregar los nombres de las listas como encabezados
+            foreach ($lists as $list) {
+                echo "<th>" . $list['name_list'] . "</th>";
             }
+            ?>
+        </tr>
+        <?php
+        if ($result_products->num_rows > 0) {
+            // Mostrar los datos de cada producto
+            while($product = $result_products->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $product["id_product"] . "</td>";
+                echo "<td>" . $product["desc_product"] . "</td>";
+                echo "<td>$" . number_format($product["cost_product"], 2) . "</td>";
+                echo "<td>" . $product["stock_prod"] . "</td>";
+
+                // Para cada producto, multiplicar por el coeficiente de cada lista
+                foreach ($lists as $list) {
+                    $precio_lista = $product["cost_product"] * $list["coef_list"];
+                    echo "<td>$" . number_format($precio_lista, 2) . "</td>";
+                }
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='" . (4 + count($lists)) . "'>No hay productos disponibles</td></tr>";
         }
         ?>
-    </select>
-
-    <br><br>
-    <button type="submit">Guardar Venta</button>
-</form>
-
-<script>
-    // Función para añadir otra fila de producto
-    function addProductRow() {
-        var productsDiv = document.getElementById('products');
-        var productRow = document.createElement('div');
-        productRow.className = 'product-row';
-        productRow.innerHTML = `
-            <label>Producto:</label>
-            <select name="product_id[]" required>
-                <option value="">Seleccione un producto</option>
-                <?php
-                if ($result_products->num_rows > 0) {
-                    $result_products->data_seek(0); // Reiniciar puntero de resultados
-                    while ($product = $result_products->fetch_assoc()) {
-                        echo "<option value='" . $product['id_product'] . "' data-cost='" . $product['cost_product'] . "'>" . $product['desc_product'] . " - $" . $product['cost_product'] . "</option>";
-                    }
-                }
-                ?>
-            </select>
-            <label>Cantidad:</label>
-            <input type="number" name="quantity[]" min="1" required>
-        `;
-        productsDiv.appendChild(productRow);
-    }
-</script>
+    </table>
 
 </body>
 </html>
 
 <?php
+// Cerrar la conexión
 $conn->close();
 ?>

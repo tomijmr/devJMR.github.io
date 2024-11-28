@@ -2,6 +2,7 @@
 // login.php
 session_start();
 
+// include("sams-lite/dbconnect.php");
 // Datos de conexión a la base de datos
 $host = 'localhost'; // Cambia esto si es necesario
 $dbname = 'c2611613_devjmr';
