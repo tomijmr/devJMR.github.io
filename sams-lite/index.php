@@ -53,6 +53,7 @@
         <h1>Sales Managment System</h1>
         <a href="ventas.php">Ventas</a>
         <a href="cotizador.php">Cotizador</a>
+        <a href="movimientos.php">Movimientos</a>
         <a href="cotizadorcfg.php">Configurar Cotizador</a>
         <a href="clientes.php">Clientes</a>
     </div>
