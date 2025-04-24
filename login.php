@@ -4,16 +4,16 @@ session_start();
 
 // include("sams-lite/dbconnect.php");
 // Datos de conexión a la base de datos
-$host = 'localhost'; // Cambia esto si es necesario
-$dbname = 'c2611613_devjmr';
-$username_db = 'c2611613'; // Reemplaza con tu usuario de base de datos
-$password_db = 'SI42dakize'; // Reemplaza con tu contraseña de base de datos
+// $host = 'localhost'; // Cambia esto si es necesario
+// $dbname = 'c2611613_devjmr';
+// $username_db = 'c2611613'; // Reemplaza con tu usuario de base de datos
+// $password_db = 'SI42dakize'; // Reemplaza con tu contraseña de base de datos
 
 // // Datos de conexión a la base de datos
-// $host = 'localhost'; // Cambia esto si es necesario
-// $dbname = 'sams-cotizador';
-// $username_db = 'root'; // Reemplaza con tu usuario de base de datos
-// $password_db = ''; // Reemplaza con tu contraseña de base de datos
+$host = 'localhost'; // Cambia esto si es necesario
+$dbname = 'sams-cotizador';
+$username_db = 'root'; // Reemplaza con tu usuario de base de datos
+$password_db = ''; // Reemplaza con tu contraseña de base de datos
 
 try {
     // Conexión a la base de datos
